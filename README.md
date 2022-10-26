@@ -11,16 +11,13 @@ https://gitcoin.co/issue/29366
 ### Ideation
 The bounty expects us to create ANY application, deployed on the Algorand Blockchain that uses randomness (via the VRF Oracle) on Algorand. The app can optionally verify the random number as given by the VRF Oracle. 
 
-This app aims to create an application that leverages randomness available on Algorand Blockchain to allows users to solve challenges/bounties created by other users in the form of Algorand Assets. These assets might or might not have a physical value assoaicted with them. 
-User workflows might be defined:
-1. For a user creating a challenge/bounty:
-    1. Create an asset in the form of a challenge/bountry
-    2. The application takes care of putting this challenge in a chest RANDOMLY
+### Implementation
+This DApp aims to create an application that leverages randomness available on Algorand Blockchain to allows users/institutions to execute a type of Random Sampling from a list of dataset configured in this dApp. 
+Solution Approach:
+1. The Algorand randomness beacon returns a list of 38 random values from an already deployed smart contract. 
+2. The DApp uses systematic random sampling using the random values found in [1]
+3. The Dapp also leverages Dune to get the datasets on the fly. Various tasks running in the backend will make sure that these datasets are up to date at all times. 
+4. The DApp will take care of getting the random number from the randomness beacon on-chain and use that to perform random sampling on the dataset chosen
+5. The application returns the set of sampled data from the dataset to the user.
+6. The application also makes sure to use some user data(maybe an API key or an auth token created using time) to generate random data from the beacon. 
 
-2. For a user solving a challenge/bounty:
-    1. Choose a challenge/bounty from a chest RANDOMLY
-    2. Solve this challenge to gain access to the asset. 
-
-Notes:
-1. Assets might or might not have a monetary value associated with them. 
-2. For assets with monetary value, 20% of the asset value is transferred to the creator, 10% to the application and 70% to the user gaining access to the token.
