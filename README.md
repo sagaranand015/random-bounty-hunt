@@ -21,3 +21,14 @@ Solution Approach:
 5. The application returns the set of sampled data from the dataset to the user.
 6. The application also makes sure to use some user data(maybe an API key or an auth token created using time) to generate random data from the beacon. 
 
+### Dapp Setup
+1. The Smart Contracts are defined in the contracts directory. `test_sampling.py` can be used to deploy the Smart Contract to Algorand TestNet. 
+2. Once the App has been deployed, configure the `.env` file with `SAMPLING_APP_ID`. 
+3. Configure the `.env` file with `SERVER_SECRET_KEY` to be used for user authentication
+4. Run the frontend in the `frontend` directory after installing dependencies:
+    ```
+   cd frontend
+   npm install
+   npm start
+   ```
+5. Navigate to `localhost:3000` to interact with the DApp
