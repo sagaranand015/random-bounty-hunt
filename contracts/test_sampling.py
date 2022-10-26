@@ -6,7 +6,7 @@ from algosdk.logic import get_application_address
 from sampling import *
 from beaker import *
 import time
-from utils.constants import *
+from constants import *
 
 ACCOUNT_ADDRESS = to_public_key(ROOT_ACCOUNT_MNEMONIC)
 ACCOUNT_SECRET = to_private_key(ROOT_ACCOUNT_MNEMONIC)
@@ -76,9 +76,12 @@ def get_create_random_app(app_id: int = 0):
     sp.flat_fee = True
     sp.fee = 2000  # cover this and 1 inner transaction
 
+    user_data = bytes("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjY4ODAwMDMsImlhdCI6MTY2Njc5MzYwMywic3ViIjoiYW5vdGhlciB0d28ifQ.06WHtumdc4XBKFhrh-Bmf3fEY1Al9Qdc6X93GB3reak", encoding='utf8')
+
     res = app_client.call(
         SamplingContract.get_random,
         acct_round=round,
+        u_data=user_data,
         suggested_params=sp,
         foreign_apps=[110096026],
     )
@@ -102,10 +105,14 @@ def get_create_random_app(app_id: int = 0):
 
 if __name__ == "__main__":
 
-    deployed_app_id = int(os.environ["SAMPLING_APP_ID"])
-    if not deployed_app_id:
-        print("Starting deploy of the Sampling App(SC) on Algorand...")
-        get_create_random_app()
-    else:
-        # appID: 118504938
-        get_create_random_app(deployed_app_id)
+    print("Starting deploy of the Sampling App(SC) on Algorand...")
+    # appID: 118533297
+    get_create_random_app(118533297)
+
+    # deployed_app_id = int(os.environ["SAMPLING_APP_ID"])
+    # if not deployed_app_id:
+    #     print("Starting deploy of the Sampling App(SC) on Algorand...")
+    #     get_create_random_app()
+    # else:
+    #     # appID: 118504938
+    #     get_create_random_app(deployed_app_id)

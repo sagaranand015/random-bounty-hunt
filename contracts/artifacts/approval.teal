@@ -1,6 +1,6 @@
 #pragma version 7
 intcblock 0 1
-bytecblock 0x626561636f6e5f6170705f6964 0x
+bytecblock 0x626561636f6e5f6170705f6964
 txn NumAppArgs
 intc_0 // 0
 ==
@@ -10,7 +10,7 @@ pushbytes 0x671543f9 // "configure(uint64)void"
 ==
 bnz main_l5
 txna ApplicationArgs 0
-pushbytes 0x5641bb7a // "get_random(uint64)byte[]"
+pushbytes 0x28b6f5a3 // "get_random(uint64,byte[])byte[]"
 ==
 bnz main_l4
 err
@@ -25,10 +25,15 @@ intc_0 // 0
 assert
 txna ApplicationArgs 1
 btoi
-callsub getrandom_6
 store 0
-pushbytes 0x151f7c75 // 0x151f7c75
+txna ApplicationArgs 2
+store 1
 load 0
+load 1
+callsub getrandom_6
+store 2
+pushbytes 0x151f7c75 // 0x151f7c75
+load 2
 concat
 log
 intc_1 // 1
@@ -98,7 +103,7 @@ bytec_0 // "beacon_app_id"
 pushint 110096026 // 110096026
 app_global_put
 pushbytes 0x726e645f6e756d626572 // "rnd_number"
-bytec_1 // ""
+pushbytes 0x // ""
 app_global_put
 retsub
 
@@ -124,13 +129,13 @@ return
 
 // configure
 configure_5:
-store 1
+store 3
 txn Sender
 callsub authonly_0
 // unauthorized
 assert
 bytec_0 // "beacon_app_id"
-load 1
+load 3
 app_global_put
 retsub
 
@@ -141,13 +146,10 @@ retsub
 
 // get_randomness
 getrandomness_7:
-store 2
-intc_0 // 0
-itob
-extract 6 0
-bytec_1 // ""
-concat
-store 3
+store 4
+store 5
+load 4
+store 6
 itxn_begin
 pushint 6 // appl
 itxn_field TypeEnum
@@ -156,10 +158,10 @@ app_global_get
 itxn_field ApplicationID
 pushbytes 0x47c20c23 // "must_get(uint64,byte[])byte[]"
 itxn_field ApplicationArgs
-load 2
+load 5
 itob
 itxn_field ApplicationArgs
-load 3
+load 6
 itxn_field ApplicationArgs
 itxn_submit
 itxn LastLog

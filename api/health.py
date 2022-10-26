@@ -9,16 +9,13 @@ def get_health_status():
     try:
         # @TODO: Maybe have a check on the server health!
         return (
-            jsonify({"status": HTTPStatus.OK, "message": "All Good!"}),
+            jsonify(dict(status=True, message="All Good!")),
             HTTPStatus.OK,
         )
     except Exception as e:
         return (
             jsonify(
-                {
-                    "status": HTTPStatus.BAD_GATEWAY,
-                    "message": "All NOT Good!" + str(e),
-                }
+                jsonify(dict(status=False, message=str(e))),
             ),
             HTTPStatus.BAD_GATEWAY,
         )

@@ -29,23 +29,22 @@ class SamplingContract(Application):
         )
 
     @external
-    def get_random(self, acct_round: abi.Uint64, *, output: abi.DynamicBytes):
+    def get_random(self, acct_round: abi.Uint64, u_data: abi.DynamicArray[abi.Byte], *, output: abi.DynamicBytes):
         return Seq(
             (randomness := abi.DynamicBytes()).decode(
-                self.get_randomness(acct_round)
+                self.get_randomness(acct_round, u_data)
             ),
             output.set(randomness),
         )
 
     @internal(TealType.bytes)
-    def get_randomness(self, acct_round: abi.Uint64):
+    def get_randomness(self, acct_round: abi.Uint64, u_data: abi.DynamicArray[abi.Byte]):
         """requests randomness from random oracle beacon for requested round"""
         return Seq(
             # Prep arguments
             (round := abi.Uint64()).set(acct_round),
-            (user_data := abi.make(abi.DynamicArray[abi.Byte])).set([]),
+            (user_data := abi.make(abi.DynamicArray[abi.Byte])).set(u_data),
             # Get randomness from oracle
-            # (aid := (110096026)),
             InnerTxnBuilder.ExecuteMethodCall(
                 app_id=self.beacon_app_id,
                 method_signature="must_get(uint64,byte[])byte[]",

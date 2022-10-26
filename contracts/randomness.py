@@ -44,9 +44,11 @@ def get_randomness_from_app(user_data: str):
     sp.flat_fee = True
     sp.fee = 2000  # cover this and 1 inner transaction
 
+    u_data = bytes(user_data, encoding='utf-8')
     res = app_client.call(
         SamplingContract.get_random,
         acct_round=round,
+        u_data=u_data,
         suggested_params=sp,
         foreign_apps=[110096026],
     )

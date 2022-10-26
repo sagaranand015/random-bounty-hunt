@@ -6,6 +6,7 @@ from flask import Blueprint
 from .health import get_health_status
 from .user import new_user_registration
 from .datasets import get_all_datasets
+from .sample import get_sample_from_dataset
 
 
 """
@@ -43,6 +44,23 @@ def get_dataset_blueprints():
 
     return dataset_blueprint
 
+"""
+BLUEPRINTS FOR SAMPLING' API ENDPOINTS
+"""
+
+
+def get_sampling_blueprints():
+    """
+    Returns the blueprints for all sampling related endpoints
+    """
+    sampling_blueprint = Blueprint("sampling", __name__)
+
+    @sampling_blueprint.route("/", methods=["POST"])
+    def _get_sample_from_dataset_wrapper():
+        return get_sample_from_dataset()
+
+    return sampling_blueprint
+
 
 """
 BLUEPRINTS FOR HEALTH API ENDPOINTS
@@ -70,4 +88,5 @@ def get_all_blueprints() -> typing.List[typing.Tuple[Blueprint, str]]:
     ret.append((get_health_blueprint(), "/server"))
     ret.append((get_user_blueprint(), "/user"))
     ret.append((get_dataset_blueprints(), "/datasets"))
+    ret.append((get_sampling_blueprints(), "/sample"))
     return ret
