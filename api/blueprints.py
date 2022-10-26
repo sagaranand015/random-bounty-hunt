@@ -5,6 +5,7 @@ from flask import Blueprint
 
 from .health import get_health_status
 from .user import new_user_registration
+from .datasets import get_all_datasets
 
 
 """
@@ -23,6 +24,24 @@ def get_user_blueprint():
         return new_user_registration()
 
     return user_blueprint
+
+
+"""
+BLUEPRINTS FOR DATASETS' API ENDPOINTS
+"""
+
+
+def get_dataset_blueprints():
+    """
+    Returns the blueprints for all dataset related endpoints
+    """
+    dataset_blueprint = Blueprint("dataset", __name__)
+
+    @dataset_blueprint.route("/", methods=["GET"])
+    def _get_all_datasets():
+        return get_all_datasets()
+
+    return dataset_blueprint
 
 
 """
@@ -50,4 +69,5 @@ def get_all_blueprints() -> typing.List[typing.Tuple[Blueprint, str]]:
     ret = []
     ret.append((get_health_blueprint(), "/server"))
     ret.append((get_user_blueprint(), "/user"))
+    ret.append((get_dataset_blueprints(), "/datasets"))
     return ret
