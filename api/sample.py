@@ -1,8 +1,12 @@
+import json
+import typing
+
 from http import HTTPStatus
 from flask import jsonify, request
 
 from .auth import validate_user_token
 from utils.utils import validate_dataset_id
+from contracts.randomness import get_randomness_from_app
 
 
 def get_sample_from_dataset():
@@ -56,15 +60,33 @@ def get_sample_from_dataset():
                 HTTPStatus.BAD_REQUEST,
             )
 
+        u_data = auth_token + json.dumps(decoded_token) + str(data)
+        randomness_resp = get_randomness_from_app(u_data)
+        print("======== randomness resp 2 is: ", str(randomness_resp))
+        resp_arr = []
+        for r in range(0, len(randomness_resp)):
+            print("========= r is: ", randomness_resp[r])
+            resp_arr.append(randomness_resp[r])
 
         return (
-            jsonify(dict(status=True, message="All Good!", data=data)),
+            jsonify(dict(status=True, message="All Good!", data=data, randomness=str(randomness_resp), resp_arr=resp_arr)),
             HTTPStatus.OK,
         )
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return (
             jsonify(
                 dict(status=False, message=str(e))
             ),
             HTTPStatus.BAD_GATEWAY,
         )
+
+
+def _do_sampling(dataset_id: str, randomness_arr: typing.List):
+    """
+    Do the actual sampling from the given dataset ID and the randomness array obtained from the algorand beacon
+    via the pre-deployed app
+    """
+    return None
+

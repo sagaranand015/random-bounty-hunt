@@ -3,9 +3,9 @@ from algosdk.mnemonic import *
 from algosdk.future import transaction
 from algosdk.atomic_transaction_composer import *
 from algosdk.logic import get_application_address
-from sampling import *
+from .sampling import *
 from beaker import *
-from constants import *
+from .constants import *
 
 ACCOUNT_ADDRESS = to_public_key(ROOT_ACCOUNT_MNEMONIC)
 ACCOUNT_SECRET = to_private_key(ROOT_ACCOUNT_MNEMONIC)

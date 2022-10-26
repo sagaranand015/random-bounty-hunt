@@ -1,7 +1,7 @@
 import os
 import time
-from sampling import *
-from client import get_algorand_client_ref, get_app_client_ref
+from .sampling import *
+from .client import get_algorand_client_ref, get_app_client_ref
 
 
 def get_randomness_from_app(user_data: str):
