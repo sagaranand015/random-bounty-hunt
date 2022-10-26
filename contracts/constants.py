@@ -1,5 +1,3 @@
-AUTH_FILE = "/Users/sagaranand/Documents/workspace-open/algorand/random-bounty-hunt/.local_data/registration_keys"
-
 ALGOD_HOST = "http://testnet-api.algonode.cloud"
 ALGOD_TOKEN = ""
 

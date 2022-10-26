@@ -47,4 +47,3 @@ def new_user_registration():
     except Exception as e:
         print("NEW USER REGISTRATION FAILED: ", e)
         return jsonify(dict(status=False)), HTTPStatus.INTERNAL_SERVER_ERROR
-

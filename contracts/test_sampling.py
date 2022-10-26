@@ -6,15 +6,7 @@ from algosdk.logic import get_application_address
 from sampling import *
 from beaker import *
 import time
-
-ALGOD_HOST = "http://testnet-api.algonode.cloud"
-ALGOD_TOKEN = ""
-
-# Account 1
-# ROOT_ACCOUNT_MNEMONIC = "point visa rotate quiz rice neutral tenant elephant toss verify syrup above seven question drive welcome loop goose kind define matrix lumber purity able roast"
-
-# Account 2
-ROOT_ACCOUNT_MNEMONIC = "spot exclude panda catch elegant cigar lottery adult annual journey city whisper appear paper myself girl service clutch word future rude dutch cost about knife"
+from utils.constants import *
 
 ACCOUNT_ADDRESS = to_public_key(ROOT_ACCOUNT_MNEMONIC)
 ACCOUNT_SECRET = to_private_key(ROOT_ACCOUNT_MNEMONIC)
@@ -60,7 +52,7 @@ def get_create_random_app(app_id: int = 0):
     round = sp.first
 
     # wait an extra couple rounds
-    wait_round = round + 30
+    wait_round = round + 10
 
     sp = algod_client.suggested_params()
     current_round = sp.first
@@ -77,7 +69,7 @@ def get_create_random_app(app_id: int = 0):
         sum = sum + diff
         print(f"Currently at round {current_round}, {t1}, {t2}, diff: {diff}")
 
-    print("======== Average val is: ", sum / 30)
+    print("======== Average val is: ", sum / 10)
 
     print("Settling...")
     sp = algod_client.suggested_params()
